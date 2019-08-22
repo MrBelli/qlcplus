@@ -29,6 +29,7 @@
 #include "dmxdumpfactoryproperties.h"
 #include "qlcfixturedefcache.h"
 #include "doc.h"
+#include <QShortcut>
 
 class QProgressDialog;
 class QMessageBox;
@@ -99,6 +100,7 @@ protected:
 
 private:
     QTabWidget* m_tab;
+    QShortcut *shortcut1,*shortcut2,*shortcutStart,*shortcutPause,*shortcutStop;
     QDir m_workingDirectory;
     bool m_overscan;
     bool m_noGui;
@@ -264,6 +266,12 @@ public slots:
 
     void slotSaveAutostart(QString fileName);
 
+    QFile::FileError slotFileOpenPreset(QString filename);
+    void loadWorkspace1();
+    void loadWorkspace2();
+    void operationPause();
+    void operationStop();
+    void operationStart();
 private:
     QString m_fileName;
 };

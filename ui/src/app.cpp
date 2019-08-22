@@ -204,11 +204,71 @@ void App::disableGUI()
     m_noGui = true;
 }
 
+void App::loadWorkspace1()
+{
+    //BELLI
+
+    qDebug() << "OOOK CONRAD";
+    slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
+
+
+}
+
+void App::loadWorkspace2()
+{
+    //BELLI
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << "zio musso";
+    slotFileOpenPreset("");
+}
+
+
+void App::operationStart()
+{
+    //BELLI
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << "zio musso";
+}
+
+
+void App::operationStop()
+{
+    //BELLI
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << "zio musso";
+}
+
+
+void App::operationPause()
+{
+    //BELLI
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << "zio musso";
+
+}
+
+
+
 void App::init()
 {
-    QSettings settings;
+   QSettings settings;
+   QTextStream cout(stdout, QIODevice::WriteOnly);
+   cout << "zio musso";
 
-    setWindowIcon(QIcon(":/qlcplus.png"));
+   shortcut1 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_1), this);
+   shortcut2 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), this);
+   shortcutStart = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
+   shortcutPause = new QShortcut(QKeySequence(Qt::CTRL + + Qt::SHIFT + Qt::Key_P), this);
+   shortcutStop  = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_X), this);
+
+
+   connect(shortcut1,&QShortcut::activated,this,&App::loadWorkspace1);
+   connect(shortcut2,&QShortcut::activated,this,&App::loadWorkspace2);
+   connect(shortcutStart,&QShortcut::activated,this,&App::operationStart);
+   connect(shortcutPause,&QShortcut::activated,this,&App::operationPause);
+   connect(shortcutStop ,&QShortcut::activated,this,&App::operationStop);
+
+   setWindowIcon(QIcon(":/qlcplus.png"));
 
     m_tab = new QTabWidget(this);
     m_tab->setTabPosition(QTabWidget::South);
@@ -932,6 +992,54 @@ bool App::slotFileNew()
     clearDocument();
     return true;
 }
+
+QFile::FileError App::slotFileOpenPreset(QString filename)
+{
+    //BELLI
+    QString fn;
+
+    m_workingDirectory = QFileInfo(filename).absoluteDir();
+
+    QSettings settings;
+    settings.setValue(SETTINGS_WORKINGPATH, m_workingDirectory.absolutePath());
+
+    fn = filename;
+    if (fn.isEmpty() == true)
+        return QFile::NoError;
+
+    /* Clear existing document data */
+    clearDocument();
+
+#ifdef DEBUG_SPEED
+    speedTime.restart();
+#endif
+
+    /* Load the file */
+    QFile::FileError error = loadXML(fn);
+    if (handleFileError(error) == true)
+        m_doc->resetModified();
+
+#ifdef DEBUG_SPEED
+    qDebug() << "[App] Project loaded in" << speedTime.elapsed() << "ms.";
+#endif
+
+    /* Update these in any case, since they are at least emptied now as
+       a result of calling clearDocument() a few lines ago. */
+    //if (FunctionManager::instance() != NULL)
+    //    FunctionManager::instance()->updateTree();
+    if (FixtureManager::instance() != NULL)
+        FixtureManager::instance()->updateView();
+    if (InputOutputManager::instance() != NULL)
+        InputOutputManager::instance()->updateList();
+    if (Monitor::instance() != NULL)
+        Monitor::instance()->updateView();
+
+    updateFileOpenMenu(fn);
+
+    return error;
+}
+
+
 
 QFile::FileError App::slotFileOpen()
 {

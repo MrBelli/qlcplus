@@ -162,7 +162,7 @@ void printVersion()
     cout << "Apache 2.0 license." << endl;
     cout << "Copyright (c) Heikki Junnila (hjunnila@users.sf.net)" << endl;
     cout << "Copyright (c) Massimo Callegari (massimocallegari@yahoo.it)" << endl;
-    cout << endl;
+    cout << endl;    
 }
 
 /**
@@ -312,6 +312,7 @@ int main(int argc, char** argv)
     /* Create the Qt core application object */
     QApplication qapp(argc, argv);
 
+
     /* At least MIDI plugin requires this so best to declare it here for everyone */
     qRegisterMetaType<QVariant>("QVariant");
 
@@ -324,9 +325,8 @@ int main(int argc, char** argv)
 #endif
 
     QLCi18n::init();
-
     /* Let the world know... */
-    printVersion();
+    //printVersion();
 
     /* Parse command-line arguments */
     if (parseArgs() == false)
@@ -341,6 +341,7 @@ int main(int argc, char** argv)
 #else
     qInstallMessageHandler(qlcMessageHandler);
 #endif
+
 
     /* Create and initialize the QLC application object */
     App app;
