@@ -356,7 +356,7 @@ int main(int argc, char** argv)
         app.disableGUI();
 
     app.startup();
-    app.show();
+    app.show();    
 
     if (QLCArgs::workspace.isEmpty() == false)
     {

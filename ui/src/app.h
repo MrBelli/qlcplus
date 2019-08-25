@@ -89,7 +89,7 @@ public:
     void disableGUI();
 
 private:
-    void init();
+    int init();
     void closeEvent(QCloseEvent*);
     void setActiveWindow(const QString& name);
 
@@ -104,6 +104,7 @@ private:
     QDir m_workingDirectory;
     bool m_overscan;
     bool m_noGui;
+    int m_workspacesNum=0;
 
     /*********************************************************************
      * Progress dialog
@@ -272,8 +273,13 @@ public slots:
     void operationPause();
     void operationStop();
     void operationStart();
+    void loadWorkSpaces();
 private:
     QString m_fileName;
+
+signals:
+    void stopPlayback();
+
 };
 
 /** @} */

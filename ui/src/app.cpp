@@ -182,9 +182,12 @@ void App::startup()
     createProgressDialog();
 #endif
 
-    init();
+    qDebug() << "ciao";
+    int a = init();
     slotModeDesign();
     slotDocModified(false);
+    Q_UNUSED(a)
+
 
 #if defined(__APPLE__) || defined(Q_OS_MAC)
     destroyProgressDialog();
@@ -204,56 +207,83 @@ void App::disableGUI()
     m_noGui = true;
 }
 
+
 void App::loadWorkspace1()
 {
     //BELLI
-
-    qDebug() << "OOOK CONRAD";
-    slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
-
-
+    //ShowManager::instance()->slotStopPlayback();
+    //emit stopPlayback();
+//    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+//    slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
+//    QTimer::singleShot(3000,ShowManager::instance(),SLOT(slotStartPlayback()));
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 1;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
 }
 
 void App::loadWorkspace2()
 {
     //BELLI
-    QTextStream cout(stdout, QIODevice::WriteOnly);
-    cout << "zio musso";
-    slotFileOpenPreset("");
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 2;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkSpaces()
+{
+    switch (m_workspacesNum) {
+    case 0:
+        slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
+        break;
+    case 1:
+        slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
+        break;
+    case 2:
+        slotFileOpenPreset("/home/pi/Downloads/prova2.qxw");
+        break;
+    default:
+        break;
+
+    }
+
+    QTimer::singleShot(3000,ShowManager::instance(),SLOT(slotStartPlayback()));
+
 }
 
 
 void App::operationStart()
 {
     //BELLI
-    QTextStream cout(stdout, QIODevice::WriteOnly);
-    cout << "zio musso";
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+
 }
 
 
 void App::operationStop()
 {
     //BELLI
-    QTextStream cout(stdout, QIODevice::WriteOnly);
-    cout << "zio musso";
+    //emit stopPlayback();
 }
 
 
 void App::operationPause()
 {
     //BELLI
-    QTextStream cout(stdout, QIODevice::WriteOnly);
-    cout << "zio musso";
 
 }
 
 
 
-void App::init()
+int App::init()
 {
    QSettings settings;
-   QTextStream cout(stdout, QIODevice::WriteOnly);
-   cout << "zio musso";
+
+   //ShowManager* sm = ShowManager::instance();
+   //connect(this,SIGNAL(stopPlayback()),sm,SLOT(slotStopPlayback()));
+
 
    shortcut1 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_1), this);
    shortcut2 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), this);
@@ -262,11 +292,13 @@ void App::init()
    shortcutStop  = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_X), this);
 
 
-   connect(shortcut1,&QShortcut::activated,this,&App::loadWorkspace1);
-   connect(shortcut2,&QShortcut::activated,this,&App::loadWorkspace2);
-   connect(shortcutStart,&QShortcut::activated,this,&App::operationStart);
-   connect(shortcutPause,&QShortcut::activated,this,&App::operationPause);
-   connect(shortcutStop ,&QShortcut::activated,this,&App::operationStop);
+   connect(shortcut1,SIGNAL(activated()),this,SLOT(loadWorkspace1()));
+   connect(shortcut2,SIGNAL(activated()),this,SLOT(loadWorkspace2()));
+   connect(shortcutStart,SIGNAL(activated()),this,SLOT(operationStart()));
+   connect(shortcutPause,SIGNAL(activated()),this,SLOT(operationPause()));
+   connect(shortcutStop ,SIGNAL(activated()),this,SLOT(operationStop()));
+
+   connect(this,SIGNAL(signalLoadWorkSpaces(int)),this,SLOT(loadWorkSpaces(int)));
 
    setWindowIcon(QIcon(":/qlcplus.png"));
 
@@ -396,6 +428,8 @@ void App::init()
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     m_videoProvider = new VideoProvider(m_doc, this);
 #endif
+
+    return 1;
 }
 
 void App::setActiveWindow(const QString& name)
