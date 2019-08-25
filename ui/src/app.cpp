@@ -95,6 +95,7 @@ App::App()
     , m_tab(NULL)
     , m_overscan(false)
     , m_noGui(false)
+    , m_workspacesNum(0)
     , m_progressDialog(NULL)
     , m_doc(NULL)
 
@@ -124,7 +125,7 @@ App::App()
     , m_dumpProperties(NULL)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     , m_videoProvider(NULL)
-#endif
+#endif    
 {
     QCoreApplication::setOrganizationName("qlcplus");
     QCoreApplication::setOrganizationDomain("sf.net");
@@ -211,11 +212,7 @@ void App::disableGUI()
 void App::loadWorkspace1()
 {
     //BELLI
-    //ShowManager::instance()->slotStopPlayback();
     //emit stopPlayback();
-//    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
-//    slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
-//    QTimer::singleShot(3000,ShowManager::instance(),SLOT(slotStartPlayback()));
     QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
     QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
     m_workspacesNum = 1;
@@ -232,17 +229,121 @@ void App::loadWorkspace2()
     QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
 }
 
+void App::loadWorkspace3()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 3;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkspace4()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 4;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkspace5()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 5;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkspace6()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 6;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkspace7()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 7;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkspace8()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 8;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+
+void App::loadWorkspace9()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 9;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+void App::loadWorkspace0()
+{
+    //BELLI
+    //emit stopPlayback();
+    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
+    QTimer::singleShot(500,ShowManager::instance(),SLOT(slotStopPlayback()));
+    m_workspacesNum = 0;
+    QTimer::singleShot(3000,this,SLOT(loadWorkSpaces()));
+}
+
+
+
 void App::loadWorkSpaces()
 {
     switch (m_workspacesNum) {
     case 0:
-        slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
+        slotFileOpenPreset("/home/pi/Downloads/prova0.qxw");
         break;
     case 1:
         slotFileOpenPreset("/home/pi/Downloads/prova1.qxw");
         break;
     case 2:
         slotFileOpenPreset("/home/pi/Downloads/prova2.qxw");
+        break;
+    case 3:
+        slotFileOpenPreset("/home/pi/Downloads/prova3.qxw");
+        break;
+    case 4:
+        slotFileOpenPreset("/home/pi/Downloads/prova4.qxw");
+        break;
+    case 5:
+        slotFileOpenPreset("/home/pi/Downloads/prova5.qxw");
+        break;
+    case 6:
+        slotFileOpenPreset("/home/pi/Downloads/prova6.qxw");
+        break;
+    case 7:
+        slotFileOpenPreset("/home/pi/Downloads/prova7.qxw");
+        break;
+    case 8:
+        slotFileOpenPreset("/home/pi/Downloads/prova8.qxw");
+        break;
+    case 9:
+        slotFileOpenPreset("/home/pi/Downloads/prova9.qxw");
         break;
     default:
         break;
@@ -257,8 +358,7 @@ void App::loadWorkSpaces()
 void App::operationStart()
 {
     //BELLI
-    QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
-
+    //QTimer::singleShot(0,ShowManager::instance(),SLOT(slotStopPlayback()));
 }
 
 
@@ -272,7 +372,6 @@ void App::operationStop()
 void App::operationPause()
 {
     //BELLI
-
 }
 
 
@@ -287,13 +386,35 @@ int App::init()
 
    shortcut1 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_1), this);
    shortcut2 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), this);
-   shortcutStart = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
-   shortcutPause = new QShortcut(QKeySequence(Qt::CTRL + + Qt::SHIFT + Qt::Key_P), this);
-   shortcutStop  = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_X), this);
+   shortcut3 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_3), this);
+   shortcut4 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_4), this);
+   shortcut5 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_5), this);
+   shortcut6 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_6), this);
+   shortcut7 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_7), this);
+   shortcut8 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_8), this);
+   shortcut9 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_9), this);
+   shortcut0 = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_0), this);
+
 
 
    connect(shortcut1,SIGNAL(activated()),this,SLOT(loadWorkspace1()));
    connect(shortcut2,SIGNAL(activated()),this,SLOT(loadWorkspace2()));
+   connect(shortcut3,SIGNAL(activated()),this,SLOT(loadWorkspace3()));
+   connect(shortcut4,SIGNAL(activated()),this,SLOT(loadWorkspace4()));
+   connect(shortcut5,SIGNAL(activated()),this,SLOT(loadWorkspace5()));
+   connect(shortcut6,SIGNAL(activated()),this,SLOT(loadWorkspace6()));
+   connect(shortcut7,SIGNAL(activated()),this,SLOT(loadWorkspace7()));
+   connect(shortcut8,SIGNAL(activated()),this,SLOT(loadWorkspace8()));
+   connect(shortcut9,SIGNAL(activated()),this,SLOT(loadWorkspace9()));
+   connect(shortcut0,SIGNAL(activated()),this,SLOT(loadWorkspace0()));
+
+
+
+   //UNUSED
+   shortcutStart = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
+   shortcutPause = new QShortcut(QKeySequence(Qt::CTRL + + Qt::SHIFT + Qt::Key_P), this);
+   shortcutStop  = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_X), this);
+
    connect(shortcutStart,SIGNAL(activated()),this,SLOT(operationStart()));
    connect(shortcutPause,SIGNAL(activated()),this,SLOT(operationPause()));
    connect(shortcutStop ,SIGNAL(activated()),this,SLOT(operationStop()));

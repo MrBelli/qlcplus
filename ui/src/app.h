@@ -100,11 +100,23 @@ protected:
 
 private:
     QTabWidget* m_tab;
-    QShortcut *shortcut1,*shortcut2,*shortcutStart,*shortcutPause,*shortcutStop;
+    QShortcut *shortcut1,
+    *shortcut2,
+    *shortcut3,
+    *shortcut4,
+    *shortcut5,
+    *shortcut6,
+    *shortcut7,
+    *shortcut8,
+    *shortcut9,
+    *shortcut0,
+    *shortcutStart,
+    *shortcutPause,
+    *shortcutStop;
     QDir m_workingDirectory;
     bool m_overscan;
     bool m_noGui;
-    int m_workspacesNum=0;
+    int m_workspacesNum;
 
     /*********************************************************************
      * Progress dialog
@@ -270,6 +282,14 @@ public slots:
     QFile::FileError slotFileOpenPreset(QString filename);
     void loadWorkspace1();
     void loadWorkspace2();
+    void loadWorkspace3();
+    void loadWorkspace4();
+    void loadWorkspace5();
+    void loadWorkspace6();
+    void loadWorkspace7();
+    void loadWorkspace8();
+    void loadWorkspace9();
+    void loadWorkspace0();
     void operationPause();
     void operationStop();
     void operationStart();
